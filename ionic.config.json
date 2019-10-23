@@ -1,5 +1,7 @@
 {
   "name": "turinAuth",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
