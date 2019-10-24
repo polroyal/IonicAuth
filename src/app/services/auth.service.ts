@@ -2,19 +2,29 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { AuthConstants } from '../config/auth-constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  store(AUTH: string, userData: any) {
-  //   throw new Error('Method not implemented.');
-   }
+  // store(AUTH: string, userData: any) {
+  
+  //  }
+
+   userData$ = new BehaviorSubject<any>('');
+
 
   constructor(private httpService: HttpService, private storageService: StorageService,
               private router: Router) { }
+
+  getUserData() {
+    this.storageService.get(AuthConstants.AUTH).then(res => {
+      console.log(res);
+      this.userData$.next(res);
+    });
+  }
 
   login(postData: any): Observable<any> {
     return this.httpService.post('login', postData);
@@ -29,6 +39,7 @@ export class AuthService {
   logout() {
     // this.storageService.clear();
     this.storageService.removeItem(AuthConstants.AUTH).then(res => {
+      this.userData$.next('');
       this.router.navigate(['']);
     });
   }

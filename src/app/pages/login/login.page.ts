@@ -26,8 +26,8 @@ export class LoginPage implements OnInit {
   }
 
   validateInputs() {
-    let username = this.postData.username.trim();
-    let password = this.postData.password.trim();
+    const username = this.postData.username.trim();
+    const password = this.postData.password.trim();
 
     return (this.postData.username && this.postData.password && username.length > 0 && password.length > 0);
   }

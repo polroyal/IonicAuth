@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePage } from './home.page';
 import { HomeGuard } from '../guards/home.guard';
+import { UserDataResolver } from '../resolvers/userData.resolver';
 
 
 const routes: Routes = [
@@ -9,6 +10,9 @@ const routes: Routes = [
     path: 'home',
     component: HomePage,
     canActivate: [HomeGuard],
+    resolve: {
+      userData: UserDataResolver
+    },
     children: [
         {
             path: 'feed',
@@ -28,11 +32,17 @@ const routes: Routes = [
                 m => m.MessagesPageModule)
         },
 
-        // {
-        //     path: 'settings',
-        //     loadChildren: () => import('../pages/settings/settings.module').then(
-        //         m => m.SettingsPageModule)
-        // }
+        {
+            path: 'settings',
+            loadChildren: () => import('../pages/settings/settings.module').then(
+                m => m.SettingsPageModule)
+        },
+
+        {
+            path: '',
+            redirectTo: 'home/feed',
+            pathMatch: 'full'
+        }
     ]
   }];
 
